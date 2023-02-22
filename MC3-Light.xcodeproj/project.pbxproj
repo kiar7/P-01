@@ -10,6 +10,9 @@
 		833785C229A5854D00DE5263 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833785C129A5854D00DE5263 /* Trigger.swift */; };
 		837E68B529A55F09002FE175 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837E68B429A55F09002FE175 /* Enemy.swift */; };
 		83A1574629A4002A009C0537 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1574529A4002A009C0537 /* Platform.swift */; };
+		A7393D3D29A6723300C47229 /* lightbulb.png in Resources */ = {isa = PBXBuildFile; fileRef = A7393D3A29A6723300C47229 /* lightbulb.png */; };
+		A7393D3E29A6723300C47229 /* cicciobello.png in Resources */ = {isa = PBXBuildFile; fileRef = A7393D3B29A6723300C47229 /* cicciobello.png */; };
+		A7393D3F29A6723300C47229 /* ciccio.png in Resources */ = {isa = PBXBuildFile; fileRef = A7393D3C29A6723300C47229 /* ciccio.png */; };
 		A7AE5C4B29A3C2F6002FDAEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AE5C4A29A3C2F6002FDAEB /* AppDelegate.swift */; };
 		A7AE5C4D29A3C2F6002FDAEB /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A7AE5C4C29A3C2F6002FDAEB /* GameScene.sks */; };
 		A7AE5C4F29A3C2F6002FDAEB /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A7AE5C4E29A3C2F6002FDAEB /* Actions.sks */; };
@@ -22,6 +25,8 @@
 		A7AE5C6F29A3C2F8002FDAEB /* MC3_LightUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AE5C6E29A3C2F8002FDAEB /* MC3_LightUITests.swift */; };
 		A7AE5C7129A3C2F8002FDAEB /* MC3_LightUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AE5C7029A3C2F8002FDAEB /* MC3_LightUITestsLaunchTests.swift */; };
 		A7C223B329A4DA2500439545 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C223B229A4DA2500439545 /* Player.swift */; };
+		A7DF152229A6741B00FDDBF9 /* normalTest.png in Resources */ = {isa = PBXBuildFile; fileRef = A7DF152129A6741B00FDDBF9 /* normalTest.png */; };
+		A7DF152429A6743E00FDDBF9 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A7DF152329A6743E00FDDBF9 /* background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +50,12 @@
 		833785C129A5854D00DE5263 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		837E68B429A55F09002FE175 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		83A1574529A4002A009C0537 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		A7393D3A29A6723300C47229 /* lightbulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightbulb.png; sourceTree = "<group>"; };
+		A7393D3B29A6723300C47229 /* cicciobello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cicciobello.png; sourceTree = "<group>"; };
+		A7393D3C29A6723300C47229 /* ciccio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ciccio.png; sourceTree = "<group>"; };
 		A7AE5C4729A3C2F6002FDAEB /* MC3-Light.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MC3-Light.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7AE5C4A29A3C2F6002FDAEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A7AE5C4C29A3C2F6002FDAEB /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = "../../../../../../../../Progetti ADA/MC3/MC3-Light/MC3-Light/MC3LightY/MC3-Light/GameScene.sks"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7AE5C4C29A3C2F6002FDAEB /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = "../../../../../../../../Documents/GitHub/MC3LC/MC3-Light/GameScene.sks"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7AE5C4E29A3C2F6002FDAEB /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		A7AE5C5029A3C2F6002FDAEB /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		A7AE5C5229A3C2F6002FDAEB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +68,8 @@
 		A7AE5C6E29A3C2F8002FDAEB /* MC3_LightUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3_LightUITests.swift; sourceTree = "<group>"; };
 		A7AE5C7029A3C2F8002FDAEB /* MC3_LightUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3_LightUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A7C223B229A4DA2500439545 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		A7DF152129A6741B00FDDBF9 /* normalTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normalTest.png; sourceTree = "<group>"; };
+		A7DF152329A6743E00FDDBF9 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +117,18 @@
 			path = GameScene;
 			sourceTree = "<group>";
 		};
+		A7393D3929A671F300C47229 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				A7DF152129A6741B00FDDBF9 /* normalTest.png */,
+				A7DF152329A6743E00FDDBF9 /* background.png */,
+				A7393D3C29A6723300C47229 /* ciccio.png */,
+				A7393D3B29A6723300C47229 /* cicciobello.png */,
+				A7393D3A29A6723300C47229 /* lightbulb.png */,
+			);
+			path = Sprites;
+			sourceTree = "<group>";
+		};
 		A7AE5C3E29A3C2F6002FDAEB = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +152,7 @@
 		A7AE5C4929A3C2F6002FDAEB /* MC3-Light */ = {
 			isa = PBXGroup;
 			children = (
+				A7393D3929A671F300C47229 /* Sprites */,
 				83A1574429A40014009C0537 /* Models */,
 				A71F12E629A53BBB00665582 /* GameScene */,
 				A7AE5C4A29A3C2F6002FDAEB /* AppDelegate.swift */,
@@ -264,10 +287,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7AE5C5629A3C2F6002FDAEB /* Main.storyboard in Resources */,
+				A7DF152429A6743E00FDDBF9 /* background.png in Resources */,
+				A7393D3D29A6723300C47229 /* lightbulb.png in Resources */,
+				A7DF152229A6741B00FDDBF9 /* normalTest.png in Resources */,
 				A7AE5C4D29A3C2F6002FDAEB /* GameScene.sks in Resources */,
 				A7AE5C5829A3C2F7002FDAEB /* Assets.xcassets in Resources */,
 				A7AE5C5B29A3C2F7002FDAEB /* LaunchScreen.storyboard in Resources */,
 				A7AE5C4F29A3C2F6002FDAEB /* Actions.sks in Resources */,
+				A7393D3E29A6723300C47229 /* cicciobello.png in Resources */,
+				A7393D3F29A6723300C47229 /* ciccio.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

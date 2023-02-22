@@ -13,11 +13,14 @@ struct CollisionBitMask {
     static let enemyCategory:UInt32 = 2
     static let groundCategory:UInt32 = 3
     static let chargingBoxCategory:UInt32 = 4
+    static let itemCatecory:UInt32 = 5
+    static let winBoxCategory:UInt32 = 6
 }
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    let light = SKLightNode()
     var playerStart : SKSpriteNode!
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
@@ -28,14 +31,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    
     var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
     
     var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
+    var item = Trigger.Item(sprite: SKSpriteNode(imageNamed: "item"), size: CGSize(width: 50, height: 50))
+    var winBox = Trigger.Item(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
     
     // GROUND
     
     var ground : SKSpriteNode!
+    
+    // LIGHT
+
+    var _scale: CGFloat = 1.0
+    var _screenH: CGFloat = 640.0
+    var _screenW: CGFloat = 960.0
+
+    var _backgroundSprite1: SKSpriteNode?
+    var _backgroundSprite2: SKSpriteNode?
+    var _foregroundSprite1: SKSpriteNode?
+    var _foregroundSprite2: SKSpriteNode?
+    var _ambientColor: UIColor?
+    var _lightSprite: SKSpriteNode?
     
     // INPUT
     
@@ -56,12 +73,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneSetup()
         setupPlayer()
         setupChargingBox()
+        setupItem()
+        setupWinBox()
     }
     
     
     override func didMove(to view: SKView) {
         print("didMove")
         self.physicsWorld.contactDelegate = self
+        //    GESTIONE LUCI
+       _screenH = view.frame.height
+       _screenW = view.frame.width
+       _scale = _screenW / 3800
+       _ambientColor = UIColor.darkGray
+       initBackground()
+       initLight()
     }
     
     func setupGround()
@@ -85,7 +111,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.sprite.physicsBody?.categoryBitMask = CollisionBitMask.playerCategory
         player.sprite.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
         player.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
-        
         self.lastUpdateTime = 0
         CreateInput()
 
@@ -93,7 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupChargingBox()
     {
-        chargingBox.sprite.size = CGSize(width: 500, height: 100)
+        chargingBox.sprite.size = CGSize(width: 100, height: 100)
         chargingBox.sprite.zPosition = player.sprite.zPosition - 1
         chargingBox.sprite.physicsBody!.isDynamic = true
         chargingBox.sprite.position.y = player.sprite.position.y - 100
@@ -102,6 +127,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         chargingBox.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
         chargingBox.sprite.physicsBody?.affectedByGravity = false
         chargingBox.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
+    }
+    
+    func setupItem()
+    {
+        item.sprite.size = CGSize(width: 200, height: 200)
+        item.sprite.zPosition = player.sprite.zPosition + 6
+        item.sprite.physicsBody!.isDynamic = true
+        item.sprite.position.y = player.sprite.position.y
+        item.sprite.position.x = player.sprite.position.x + 400
+        item.sprite.physicsBody!.categoryBitMask = CollisionBitMask.itemCatecory
+        item.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
+        item.sprite.physicsBody?.affectedByGravity = false
+        item.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
+        addChild(item.sprite)
+    }
+    
+    func setupWinBox()
+    {
+        winBox.sprite.size = CGSize(width: 100, height: 100)
+        winBox.sprite.zPosition = player.sprite.zPosition + 6
+        winBox.sprite.physicsBody!.isDynamic = true
+        winBox.sprite.position.y = player.sprite.position.y - 100
+        winBox.sprite.position.x = player.sprite.position.x + 600
+        winBox.sprite.physicsBody!.categoryBitMask = CollisionBitMask.winBoxCategory
+        winBox.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
+        winBox.sprite.physicsBody?.affectedByGravity = false
+        winBox.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
+        addChild(winBox.sprite)
     }
     
     func sceneSetup()
@@ -134,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        touchDown?.zRotation = -3.14159
 //        touchDown?.zPosition = 100
 //        addChild(touchDown!)
-//
+
         touchLeft = SKSpriteNode(imageNamed: "freccia")
         touchLeft?.size = CGSize(width: 110, height: 110)
         touchLeft?.name = "left"
@@ -271,6 +324,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         touchRight?.position.x = cameraNode.position.x - 440
         touchRight?.position.y = cameraNode.position.y - 240
+        
+        _lightSprite?.position.x = player.sprite.position.x
+        _lightSprite?.position.y = player.sprite.position.y
+        
     }
     
     
@@ -282,12 +339,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
-            print("A")
         } else
         {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
-            print("B")
         }
         if(firstBody.node?.name == "player" && secondBody.node?.name == "chargingBox")
         {
@@ -295,12 +350,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody.contactTestBitMask = CollisionBitMask.chargingBoxCategory
             touchJump.texture = SKTexture(imageNamed: "Player")
             player.nearBoxCharge = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.5)
+            {
+                self._lightSprite?.position.y = self.player.sprite.position.y + 100000
+            }
             print("contact")
         }
         else if(firstBody.node?.name == "player" && secondBody.node?.name == "ground")
         {
             print("ground")
             player.isFalling = false
+        }
+        else if(firstBody.node?.name == "player" && secondBody.node?.name == "item")
+        {
+            print("HO RACCOLTO L'ITEM")
+            item.sprite.removeFromParent()
+        }
+        else if(firstBody.node?.name == "player" && secondBody.node?.name == "winBox")
+        {
+            print("HO FOTTUTAMENTE VINTO")
         }
     }
     
@@ -334,3 +402,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 }
+
+// LIGHT
+
+extension GameScene
+{
+
+    
+    fileprivate func initBackground() {
+        backgroundColor = SKColor.black
+        _backgroundSprite1 = addBackgroundTile(spriteFile: "/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/ciccio.png");
+        _foregroundSprite1 = addForegroundTile(spriteFile: "/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/background.png", normalsFile:"/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/normalTest.png");
+
+    }
+    
+    fileprivate func addBackgroundTile(spriteFile: String) -> SKSpriteNode {
+        
+        var background:SKSpriteNode
+
+        background = SKSpriteNode(imageNamed:spriteFile);
+        background.color = _ambientColor!
+        background.colorBlendFactor = 1
+        background.zPosition = -1
+        background.alpha = 1
+        background.anchorPoint = CGPoint(x:0, y:0.5)
+        background.setScale(_scale)
+        addChild(background);
+        
+        return background;
+    }
+    
+    fileprivate func addForegroundTile(spriteFile: String, normalsFile: String) -> SKSpriteNode {
+        var foreground:SKSpriteNode
+        
+        foreground = SKSpriteNode(texture: SKTexture(imageNamed:spriteFile), normalMap: SKTexture(imageNamed:normalsFile));
+        foreground.lightingBitMask = 1
+        foreground.color = _ambientColor!
+        foreground.colorBlendFactor = 1
+//        foreground.alpha = 1
+        foreground.zPosition = -1
+        foreground.anchorPoint = CGPoint(x:0, y:0.5)
+        foreground.setScale(_scale * 2)
+        addChild(foreground)
+        
+        return foreground
+    }
+    
+    fileprivate func initLight() {
+        _lightSprite = SKSpriteNode(imageNamed: "/Users/mischio/Documents/GitHub/MC3LightY/MC3-Light/Sprites/lightbulb.png")
+        _lightSprite?.setScale(_scale * 50)
+        _lightSprite?.position = CGPoint(x: _screenW - 100, y: _screenH - 100)
+        _lightSprite?.size = CGSize(width: 0.1, height: 0.1)
+        addChild(_lightSprite!)
+        
+        
+        light.position = .zero
+        light.falloff = 1
+        light.ambientColor = _ambientColor!
+        light.lightColor = .white
+        
+
+        //light.shadowColor = .black
+        
+        _lightSprite?.addChild(light)
+    }
+}
+
+
