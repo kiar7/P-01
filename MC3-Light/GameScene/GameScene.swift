@@ -13,6 +13,7 @@ struct CollisionBitMask {
     static let enemyCategory:UInt32 = 2
     static let groundCategory:UInt32 = 3
     static let chargingBoxCategory:UInt32 = 4
+    static let enemyViewCategory:UInt32 = 5
 }
 
 
@@ -28,8 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    
-    var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
+    var enemy = Trigger.Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
     
     var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
     
@@ -56,6 +56,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sceneSetup()
         setupPlayer()
         setupChargingBox()
+        enemy.sprite.position.x = player.sprite.position.x + 200
+        enemy.sprite.position.y = player.sprite.position.y
+        setupEnemy()
     }
     
     
@@ -81,7 +84,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerStart = self.childNode(withName: "PlayerStart") as? SKSpriteNode
         playerStart.isHidden = true
         player.sprite.position = playerStart.position
-        player.sprite.size = player.size
         player.sprite.physicsBody?.categoryBitMask = CollisionBitMask.playerCategory
         player.sprite.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
         player.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
@@ -89,6 +91,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.lastUpdateTime = 0
         CreateInput()
 
+    }
+    
+    func setupEnemy()
+    {
+        enemy.enemyView.physicsBody?.categoryBitMask = CollisionBitMask.enemyViewCategory
+        enemy.enemyView.physicsBody?.collisionBitMask = CollisionBitMask.enemyViewCategory
+        enemy.enemyView.physicsBody?.contactTestBitMask = CollisionBitMask.enemyViewCategory
+        addChild(enemy.sprite)
+        addChild(enemy.enemyView)
     }
     
     func setupChargingBox()
@@ -112,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(cameraNode)
         camera = cameraNode
         
-        addChild(chargingBox.sprite)
+//        addChild(chargingBox.sprite)
        setupGround()
         
     }
@@ -271,8 +282,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         touchRight?.position.x = cameraNode.position.x - 440
         touchRight?.position.y = cameraNode.position.y - 240
+        enemy.enemyView.position.y = enemy.sprite.position.y + 50
+        enemy.enemyView.position.x = enemy.sprite.position.x - 100
     }
-    
     
     func didBegin(_ contact: SKPhysicsContact) {
         var firstBody = SKPhysicsBody()
@@ -301,6 +313,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             print("ground")
             player.isFalling = false
+        }
+        else  if(firstBody.node?.name == "player" && secondBody.node?.name == "enemyView")
+        {
+            secondBody.collisionBitMask = 0
+            firstBody.contactTestBitMask = CollisionBitMask.enemyViewCategory
+//            touchJump.texture = SKTexture(imageNamed: "Player")
+//            player.nearBoxCharge = true
+            print("I see you")
         }
     }
     
@@ -331,6 +351,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if(firstBody.node?.name == "player" && secondBody.node?.name == "ground")
         {
             print("ground")
+        }
+        else if(firstBody.node?.name == "player" && secondBody.node?.name == "enemyView")
+        {
+            secondBody.collisionBitMask = CollisionBitMask.enemyViewCategory
+            firstBody.collisionBitMask = CollisionBitMask.playerCategory
+            firstBody.contactTestBitMask = CollisionBitMask.playerCategory
+//            touchJump.texture = SKTexture(imageNamed: "jump")
+//            player.nearBoxCharge = false
+            print("i don't see you")
         }
     }
 }

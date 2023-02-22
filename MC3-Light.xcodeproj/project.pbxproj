@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		833785C229A5854D00DE5263 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833785C129A5854D00DE5263 /* Trigger.swift */; };
-		837E68B529A55F09002FE175 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837E68B429A55F09002FE175 /* Enemy.swift */; };
 		83A1574629A4002A009C0537 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1574529A4002A009C0537 /* Platform.swift */; };
 		A7AE5C4B29A3C2F6002FDAEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AE5C4A29A3C2F6002FDAEB /* AppDelegate.swift */; };
 		A7AE5C4D29A3C2F6002FDAEB /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A7AE5C4C29A3C2F6002FDAEB /* GameScene.sks */; };
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		833785C129A5854D00DE5263 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
-		837E68B429A55F09002FE175 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		83A1574529A4002A009C0537 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		A7AE5C4729A3C2F6002FDAEB /* MC3-Light.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MC3-Light.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7AE5C4A29A3C2F6002FDAEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 			children = (
 				83A1574529A4002A009C0537 /* Platform.swift */,
 				A7C223B229A4DA2500439545 /* Player.swift */,
-				837E68B429A55F09002FE175 /* Enemy.swift */,
 				833785C129A5854D00DE5263 /* Trigger.swift */,
 			);
 			path = Models;
@@ -294,7 +291,6 @@
 			files = (
 				A7AE5C5129A3C2F6002FDAEB /* GameScene.swift in Sources */,
 				A7AE5C5329A3C2F6002FDAEB /* GameViewController.swift in Sources */,
-				837E68B529A55F09002FE175 /* Enemy.swift in Sources */,
 				83A1574629A4002A009C0537 /* Platform.swift in Sources */,
 				833785C229A5854D00DE5263 /* Trigger.swift in Sources */,
 				A7C223B329A4DA2500439545 /* Player.swift in Sources */,
