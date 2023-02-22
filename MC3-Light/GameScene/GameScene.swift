@@ -34,17 +34,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // TRIGGER
     
+    
+    var bullet = Bullet(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 15, height: 15))
    
-    var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
-    var item = Trigger.Item(sprite: SKSpriteNode(imageNamed: "item"), size: CGSize(width: 50, height: 50))
-    var winBox = Trigger.winBox(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
+    var chargingBox = ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
+    var item = Item(sprite: SKSpriteNode(imageNamed: "item"), size: CGSize(width: 50, height: 50))
+    var winBox = WinBox(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
     
     // GROUND
     
     var ground : SKSpriteNode!
     
     //ENEMY
-    var enemy = Trigger.Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 50, height: 50))
+    var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 50, height: 50))
+    
+    var rangedEnemy = RangedEnemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 50, height: 50))
     
     // LIGHT
 
@@ -145,8 +149,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.sprite.size = CGSize(width: 50, height: 50)
         enemy.sprite.physicsBody?.affectedByGravity = false
         enemy.sprite.position.y = player.sprite.position.y - 100
-        enemy.sprite.position.x = player.sprite.position.x + 200
-        addChild(enemy.sprite)
+        enemy.sprite.position.x = player.sprite.position.x - 200
+        rangedEnemy.sprite = enemy.sprite
+//        addChild(enemy.sprite)
+        addChild(rangedEnemy.sprite)
     }
     
     func setupChargingBox()
@@ -341,7 +347,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if(!player.lightIsOn)
         {
-            enemyFollowThePlayer()
+//           enemy.enemyFollowThePlayer(player: player.sprite)
+            EnemyShoot()
         }
         
     }
@@ -491,20 +498,13 @@ extension GameScene
         
         _lightSprite?.addChild(light)
     }
-    
-    
-    func enemyFollowThePlayer()
+   
+    func EnemyShoot()
     {
-        if(enemy.sprite.position.x > player.sprite.position.x)
-        {
-            enemy.sprite.xScale = -1
-        }
-        else
-        {
-            enemy.sprite.xScale = 1
-        }
-        let moveAction = SKAction.move(to: player.sprite.position, duration: 1)
-        enemy.sprite.run(moveAction)
+        var bullet = Bullet(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 0.5, height: 0.5))
+        bullet.sprite.size = CGSize(width: 5, height: 5)
+        addChild(bullet.sprite)
+        rangedEnemy.shooting(bullet: bullet, player: player.sprite)
     }
 }
 
