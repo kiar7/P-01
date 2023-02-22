@@ -339,7 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         _lightSprite?.position.x = player.sprite.position.x
         
-        if(player.lightIsOn)
+        if(!player.lightIsOn)
         {
             enemyFollowThePlayer()
         }
@@ -495,6 +495,14 @@ extension GameScene
     
     func enemyFollowThePlayer()
     {
+        if(enemy.sprite.position.x > player.sprite.position.x)
+        {
+            enemy.sprite.xScale = -1
+        }
+        else
+        {
+            enemy.sprite.xScale = 1
+        }
         let moveAction = SKAction.move(to: player.sprite.position, duration: 1)
         enemy.sprite.run(moveAction)
     }
