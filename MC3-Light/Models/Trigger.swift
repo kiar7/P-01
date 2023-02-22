@@ -16,6 +16,8 @@ class Trigger
         case chargingBox
         case ladder
         case enemy
+        case item
+        case winBox
     }
     
     var sprite: SKSpriteNode
@@ -68,6 +70,29 @@ class Trigger
         override init(sprite: SKSpriteNode, size: CGSize) {
             super .init(sprite: sprite, size: size)
             self.sprite.name = "chargingBox"
+            setup()
+        }
+    }
+    
+    class Item: Trigger
+    {
+        var triggerType = TriggerType.item
+        
+        override init(sprite: SKSpriteNode, size: CGSize)
+        {
+            super .init(sprite: sprite, size: size)
+            self.sprite.name = "item"
+            setup()
+        }
+    }
+    
+    class winBox: Trigger
+    {
+        var triggerType = TriggerType.winBox
+        override init(sprite: SKSpriteNode, size: CGSize)
+        {
+            super .init(sprite: sprite, size: size)
+            self.sprite.name = "winBox"
             setup()
         }
     }
