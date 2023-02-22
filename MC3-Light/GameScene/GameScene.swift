@@ -102,10 +102,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        _ambientColor = UIColor.darkGray
        initBackground()
        initLight()
-        
+        deleteLight()
         
         _lightSprite?.position.y = player.sprite.position.y
 
+    }
+    
+    func deleteLight()
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.5)
+        {
+            self._lightSprite?.position.y = self.player.sprite.position.y + 100000
+        }
     }
     
     func setupGround()
@@ -242,6 +250,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if(player.nearBoxCharge)
                 {
                     player.canMove = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5)
+                    {
+                        self._lightSprite?.position.y = self.player.sprite.position.y
+                    }
                     print("nearBox")
                 }
                 else if (player.nearLadder)
@@ -355,10 +367,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody.contactTestBitMask = CollisionBitMask.chargingBoxCategory
             touchJump.texture = SKTexture(imageNamed: "Player")
             player.nearBoxCharge = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.5)
-            {
-                self._lightSprite?.position.y = self.player.sprite.position.y + 100000
-            }
             print("contact")
         }
         else if(firstBody.node?.name == "player" && secondBody.node?.name == "ground")
