@@ -70,18 +70,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func sceneDidLoad()
     {
         self.lastUpdateTime = 0
-        sceneSetup()
+        setupGround()
         setupPlayer()
         setupChargingBox()
         setupItem()
         setupWinBox()
+        CreateInput()
+
     }
     
     
     override func didMove(to view: SKView) {
         print("didMove")
         self.physicsWorld.contactDelegate = self
-        //    GESTIONE LUCI
+        
+        // CAMERA
+        
+        camera = cameraNode
+        addChild(cameraNode)
+        
+        // GESTIONE LUCI
+        
        _screenH = view.frame.height
        _screenW = view.frame.width
        _scale = _screenW / 3800
@@ -112,8 +121,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.sprite.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
         player.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
         self.lastUpdateTime = 0
-        CreateInput()
-
+        addChild(player.sprite)
     }
     
     func setupChargingBox()
@@ -127,6 +135,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         chargingBox.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
         chargingBox.sprite.physicsBody?.affectedByGravity = false
         chargingBox.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
+        addChild(chargingBox.sprite)
+
     }
     
     func setupItem()
@@ -146,34 +156,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupWinBox()
     {
         winBox.sprite.size = CGSize(width: 100, height: 100)
-        winBox.sprite.zPosition = player.sprite.zPosition + 6
-        winBox.sprite.physicsBody!.isDynamic = true
+        winBox.sprite.zPosition = player.sprite.zPosition
+        winBox.sprite.physicsBody!.isDynamic = false
+        winBox.sprite.physicsBody?.affectedByGravity = false
         winBox.sprite.position.y = player.sprite.position.y - 100
         winBox.sprite.position.x = player.sprite.position.x + 600
-        winBox.sprite.physicsBody!.categoryBitMask = CollisionBitMask.winBoxCategory
-        winBox.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
-        winBox.sprite.physicsBody?.affectedByGravity = false
+        
+        winBox.sprite.physicsBody?.categoryBitMask = CollisionBitMask.winBoxCategory
+        winBox.sprite.physicsBody?.collisionBitMask = CollisionBitMask.winBoxCategory
         winBox.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
         addChild(winBox.sprite)
     }
     
-    func sceneSetup()
-    {
-        
-        addChild(player.sprite)
-
-        addChild(cameraNode)
-        camera = cameraNode
-        
-        addChild(chargingBox.sprite)
-       setupGround()
-        
-    }
-    
     func CreateInput()
     {
-        
-        
 //        touchUp = SKSpriteNode(imageNamed: "Arrow")
 //        touchUp?.size = CGSize(width: 35, height: 35)
 //        touchUp?.name = "up"
@@ -208,15 +204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         touchJump?.zPosition = 100
         addChild(touchJump!)
     }
-    
-//    func touchDown(atPoint pos : CGPoint) {
-//    }
-    
-//    func touchMoved(toPoint pos : CGPoint) {
-//    }
-    
-//    func touchUp(atPoint pos : CGPoint) {
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -256,9 +243,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         isMovingLeft = false
@@ -366,7 +350,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("HO RACCOLTO L'ITEM")
             item.sprite.removeFromParent()
         }
-        else if(firstBody.node?.name == "player" && secondBody.node?.name == "winBox")
+        
+        if(firstBody.node?.name == "player" && secondBody.node?.name == "winBox")
+        {
+            print("HO FOTTUTAMENTE VINTO")
+        }
+        if(firstBody.node?.name == "winBox" && secondBody.node?.name == "player")
         {
             print("HO FOTTUTAMENTE VINTO")
         }
@@ -380,12 +369,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
-            print("A")
         } else
         {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
-            print("B")
         }
         if(firstBody.node?.name == "player" && secondBody.node?.name == "chargingBox")
         {
@@ -403,7 +390,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 }
 
-// LIGHT
+// ------------------------------------------ E LUCE FU -------------------------------------------------------------
 
 extension GameScene
 {

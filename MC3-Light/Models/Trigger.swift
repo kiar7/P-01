@@ -77,6 +77,7 @@ class Trigger
         {
             super .init(sprite: sprite, size: size)
             self.sprite.name = "winBox"
+            setup()
         }
     }
 }
