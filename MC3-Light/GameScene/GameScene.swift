@@ -31,8 +31,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
+    // TRIGGER
     
+    var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
     var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
     var item = Trigger.Item(sprite: SKSpriteNode(imageNamed: "item"), size: CGSize(width: 50, height: 50))
     var winBox = Trigger.Item(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
@@ -81,7 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
-        print("didMove")
+        
         self.physicsWorld.contactDelegate = self
         
         // CAMERA
@@ -97,6 +98,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        _ambientColor = UIColor.darkGray
        initBackground()
        initLight()
+        
+        
+        _lightSprite?.position.y = player.sprite.position.y
+
     }
     
     func setupGround()
@@ -163,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         winBox.sprite.position.x = player.sprite.position.x + 600
         
         winBox.sprite.physicsBody?.categoryBitMask = CollisionBitMask.winBoxCategory
-        winBox.sprite.physicsBody?.collisionBitMask = CollisionBitMask.winBoxCategory
+        winBox.sprite.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
         winBox.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
         addChild(winBox.sprite)
     }
@@ -175,7 +180,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        touchUp?.name = "up"
 //        touchUp?.zPosition = 100
 //        addChild(touchUp!)
-        
         
 //        touchDown = SKSpriteNode(imageNamed: "Arrow")
 //        touchDown?.size = CGSize(width: 35, height: 35)
@@ -244,7 +248,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
         isMovingLeft = false
         isMovingRight = false
         isJumping = false
@@ -253,14 +258,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             self.player.canMove = true
         }
-        
-        
     }
     
 //    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 //    }
     
-    override func update(_ currentTime: TimeInterval) {
+    override func update(_ currentTime: TimeInterval)
+    {
         // Called before each frame is rendered
         
         // Initialize _lastUpdateTime if it has not already been
@@ -299,7 +303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //
 //        touchDown?.position.x = cameraNode.position.x + 0.1
 //        touchDown?.position.y = cameraNode.position.y - 140
-//
+
         touchJump?.position.x = cameraNode.position.x + 550
         touchJump?.position.y = cameraNode.position.y - 240
         
@@ -310,12 +314,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         touchRight?.position.y = cameraNode.position.y - 240
         
         _lightSprite?.position.x = player.sprite.position.x
-        _lightSprite?.position.y = player.sprite.position.y
-        
     }
     
     
-    func didBegin(_ contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact)
+    {
         var firstBody = SKPhysicsBody()
         var secondBody = SKPhysicsBody()
         
@@ -361,7 +364,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func didEnd(_ contact: SKPhysicsContact) {
+    func didEnd(_ contact: SKPhysicsContact)
+    {
         var firstBody = SKPhysicsBody()
         var secondBody = SKPhysicsBody()
         
@@ -394,16 +398,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 extension GameScene
 {
-
     
-    fileprivate func initBackground() {
+    fileprivate func initBackground()
+    {
         backgroundColor = SKColor.black
         _backgroundSprite1 = addBackgroundTile(spriteFile: "/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/ciccio.png");
-        _foregroundSprite1 = addForegroundTile(spriteFile: "/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/background.png", normalsFile:"/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/normalTest.png");
-
+        _foregroundSprite1 = addForegroundTile(spriteFile: "/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/background.png", normalsFile:"/Users/mischio/Documents/GitHub/MC3LC/MC3-Light/Sprites/normalTest.png")
     }
     
-    fileprivate func addBackgroundTile(spriteFile: String) -> SKSpriteNode {
+    fileprivate func addBackgroundTile(spriteFile: String) -> SKSpriteNode
+    {
         
         var background:SKSpriteNode
 
