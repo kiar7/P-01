@@ -34,9 +34,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // TRIGGER
     
     var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
-    var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
+    var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "charging"), size: CGSize(width: 25, height: 25))
     var item = Trigger.Item(sprite: SKSpriteNode(imageNamed: "item"), size: CGSize(width: 50, height: 50))
-    var winBox = Trigger.Item(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
+    var winBox = Trigger.winBox(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
     
     // GROUND
     
@@ -77,7 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupItem()
         setupWinBox()
         CreateInput()
-
     }
     
     
@@ -98,10 +97,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        _ambientColor = UIColor.darkGray
        initBackground()
        initLight()
-        
+        deleteLight()
         
         _lightSprite?.position.y = player.sprite.position.y
 
+    }
+    
+    func deleteLight()
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.5)
+        {
+            self._lightSprite?.position.y = self.player.sprite.position.y + 100000
+        }
     }
     
     func setupGround()
@@ -230,6 +237,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if(player.nearBoxCharge)
                 {
                     player.canMove = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5)
+                    {
+                        self._lightSprite?.position.y = self.player.sprite.position.y
+                    }
                     print("nearBox")
                 }
                 else if (player.nearLadder)
@@ -337,10 +348,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody.contactTestBitMask = CollisionBitMask.chargingBoxCategory
             touchJump.texture = SKTexture(imageNamed: "Player")
             player.nearBoxCharge = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.5)
-            {
-                self._lightSprite?.position.y = self.player.sprite.position.y + 100000
-            }
             print("contact")
         }
         else if(firstBody.node?.name == "player" && secondBody.node?.name == "ground")
