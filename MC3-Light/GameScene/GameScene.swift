@@ -15,6 +15,7 @@ struct CollisionBitMask {
     static let chargingBoxCategory:UInt32 = 4
     static let itemCatecory:UInt32 = 5
     static let winBoxCategory:UInt32 = 6
+    static let enemyViewCategory:UInt32 = 7
 }
 
 
@@ -33,14 +34,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // TRIGGER
     
-    var enemy = Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
+   
     var chargingBox = Trigger.ChargingBox(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 25, height: 25))
     var item = Trigger.Item(sprite: SKSpriteNode(imageNamed: "item"), size: CGSize(width: 50, height: 50))
-    var winBox = Trigger.Item(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
+    var winBox = Trigger.winBox(sprite: SKSpriteNode(imageNamed: "WinBox"), size: CGSize(width: 50, height: 50))
     
     // GROUND
     
     var ground : SKSpriteNode!
+    
+    //ENEMY
+    var enemy = Trigger.Enemy(sprite: SKSpriteNode(imageNamed: "Player"), size: CGSize(width: 50, height: 50))
     
     // LIGHT
 
@@ -77,7 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupItem()
         setupWinBox()
         CreateInput()
-
+        setupEnemy()
     }
     
     
@@ -130,11 +134,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupEnemy()
     {
-        enemy.enemyView.physicsBody?.categoryBitMask = CollisionBitMask.enemyViewCategory
-        enemy.enemyView.physicsBody?.collisionBitMask = CollisionBitMask.enemyViewCategory
-        enemy.enemyView.physicsBody?.contactTestBitMask = CollisionBitMask.enemyViewCategory
+        enemy.sprite.size = CGSize(width: 50, height: 50)
+        enemy.sprite.physicsBody?.affectedByGravity = false
+        enemy.sprite.position.y = player.sprite.position.y - 100
+        enemy.sprite.position.x = player.sprite.position.x + 200
         addChild(enemy.sprite)
-        addChild(enemy.enemyView)
     }
     
     func setupChargingBox()
@@ -148,7 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         chargingBox.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
         chargingBox.sprite.physicsBody?.affectedByGravity = false
         chargingBox.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
-        addChild(chargingBox.sprite)
+//        addChild(chargingBox.sprite)
 
     }
     
@@ -163,7 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         item.sprite.physicsBody!.collisionBitMask = CollisionBitMask.playerCategory
         item.sprite.physicsBody?.affectedByGravity = false
         item.sprite.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
-        addChild(item.sprite)
+//        addChild(item.sprite)
     }
     
     func setupWinBox()
@@ -299,7 +303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if(isJumping == true)
         {
-            player.sprite.physicsBody?.applyImpulse(CGVector(dx: 0, dy: player.maxJump))
+            player.sprite.physicsBody?.applyImpulse(CGVector(dx: 0, dy: Int(player.maxJump)))
             isJumping = false
         }
         
@@ -322,6 +326,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         touchRight?.position.y = cameraNode.position.y - 240
         
         _lightSprite?.position.x = player.sprite.position.x
+        
+        if(player.lightIsOn)
+        {
+            enemyFollowThePlayer()
+        }
+        
     }
     
     
@@ -353,20 +363,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if(firstBody.node?.name == "player" && secondBody.node?.name == "ground")
         {
-            print("ground")
             player.isFalling = false
         }
         else if(firstBody.node?.name == "player" && secondBody.node?.name == "item")
         {
             print("HO RACCOLTO L'ITEM")
-            item.sprite.removeFromParent()
+            self.item.sprite.removeFromParent()
         }
         
-        if(firstBody.node?.name == "player" && secondBody.node?.name == "winBox")
+        else if(firstBody.node?.name == "player" && secondBody.node?.name == "winBox")
         {
             print("HO FOTTUTAMENTE VINTO")
         }
-        if(firstBody.node?.name == "winBox" && secondBody.node?.name == "player")
+        else if(firstBody.node?.name == "winBox" && secondBody.node?.name == "player")
         {
             print("HO FOTTUTAMENTE VINTO")
         }
@@ -473,6 +482,13 @@ extension GameScene
         //light.shadowColor = .black
         
         _lightSprite?.addChild(light)
+    }
+    
+    
+    func enemyFollowThePlayer()
+    {
+        let moveAction = SKAction.move(to: player.sprite.position, duration: 1)
+        enemy.sprite.run(moveAction)
     }
 }
 

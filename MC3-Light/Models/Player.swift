@@ -10,14 +10,15 @@ class Player {
     
     var sprite: SKSpriteNode
     var size: CGSize
-    var maxJump = 100
+    var maxJump: Float = 100
     var canMove: Bool = true
-    var isFalling = false
+    var isFalling:Bool = false
+    var lightIsOn: Bool = false
     
-    var nearBoxCharge = false
-    var nearLadder = false
-    var isCharging = false
-    var isOnLadder = false
+    var nearBoxCharge:Bool = false
+    var nearLadder:Bool = false
+    var isCharging:Bool = false
+    var isOnLadder:Bool = false
 
     init(sprite: SKSpriteNode, size: CGSize)
     {

@@ -10,15 +10,6 @@ import SpriteKit
 
 class Trigger
 {
-    enum TriggerType: String
-    {
-        case fallingZone
-        case chargingBox
-        case ladder
-        case enemy
-        case item
-        case winBox
-    }
     
     var sprite: SKSpriteNode
     var size: CGSize
@@ -38,34 +29,26 @@ class Trigger
     
     class Enemy: Trigger {
         
-        var triggerType = TriggerType.enemy
-        var enemyView = SKSpriteNode(imageNamed: "Player")
+        var speed: CGFloat = CGFloat(100)
         
         override init(sprite: SKSpriteNode, size: CGSize) {
             super .init(sprite: sprite, size: size)
             self.sprite.name = "enemy"
             self.sprite.xScale = -1
-            enemyView.size = CGSize(width: 300, height: 200)
-            enemyView.physicsBody = SKPhysicsBody(rectangleOf: size)
-            enemyView.name = "enemyView"
-            enemyView.position.y = sprite.position.y + 50
-            enemyView.position.x = sprite.position.x + 100
-            enemyView.physicsBody?.isDynamic = false
-            enemyView.zPosition = self.sprite.zPosition + 1
-            enemyView.xScale = -1
-            enemyView.physicsBody?.allowsRotation = false
             setup()
         }
         
-        func checkPlayer() {
-            
-            
-        }
+//        func moveEnemy(player: SKSpriteNode)
+//        {
+//            let moveEnemyAction = SKAction.move(to: CGPoint(x:player.position.x, y:player.position.y), duration: 1.0)
+//            moveEnemyAction.speed = 0.1
+////            let removeEnemyAction = SKAction.removeFromParent()
+//            sprite.run(SKAction.sequence([moveEnemyAction]), withKey: "moveEnemyAction")
+//        }
+
     }
     
     class ChargingBox: Trigger {
-        
-        var triggerType = TriggerType.chargingBox
         
         override init(sprite: SKSpriteNode, size: CGSize) {
             super .init(sprite: sprite, size: size)
@@ -76,8 +59,7 @@ class Trigger
     
     class Item: Trigger
     {
-        var triggerType = TriggerType.item
-        
+       
         override init(sprite: SKSpriteNode, size: CGSize)
         {
             super .init(sprite: sprite, size: size)
@@ -88,7 +70,7 @@ class Trigger
     
     class winBox: Trigger
     {
-        var triggerType = TriggerType.winBox
+        
         override init(sprite: SKSpriteNode, size: CGSize)
         {
             super .init(sprite: sprite, size: size)
