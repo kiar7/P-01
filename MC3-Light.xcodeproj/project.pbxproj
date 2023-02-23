@@ -10,7 +10,7 @@
 		833785C229A5854D00DE5263 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833785C129A5854D00DE5263 /* Trigger.swift */; };
 		83A1574629A4002A009C0537 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A1574529A4002A009C0537 /* Platform.swift */; };
 		83FA7C0C29A7A08F0064F8DC /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FA7C0B29A7A08F0064F8DC /* Enemy.swift */; };
-		83FA7C0E29A7A0DF0064F8DC /* PickupItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FA7C0D29A7A0DF0064F8DC /* PickupItem.swift */; };
+		83FA7C1029A7A2B70064F8DC /* PickupItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FA7C0F29A7A2B70064F8DC /* PickupItem.swift */; };
 		A7393D3D29A6723300C47229 /* lightbulb.png in Resources */ = {isa = PBXBuildFile; fileRef = A7393D3A29A6723300C47229 /* lightbulb.png */; };
 		A7393D3E29A6723300C47229 /* cicciobello.png in Resources */ = {isa = PBXBuildFile; fileRef = A7393D3B29A6723300C47229 /* cicciobello.png */; };
 		A7393D3F29A6723300C47229 /* ciccio.png in Resources */ = {isa = PBXBuildFile; fileRef = A7393D3C29A6723300C47229 /* ciccio.png */; };
@@ -51,7 +51,7 @@
 		833785C129A5854D00DE5263 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		83A1574529A4002A009C0537 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		83FA7C0B29A7A08F0064F8DC /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
-		83FA7C0D29A7A0DF0064F8DC /* PickupItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupItem.swift; sourceTree = "<group>"; };
+		83FA7C0F29A7A2B70064F8DC /* PickupItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupItem.swift; sourceTree = "<group>"; };
 		A7393D3A29A6723300C47229 /* lightbulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightbulb.png; sourceTree = "<group>"; };
 		A7393D3B29A6723300C47229 /* cicciobello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cicciobello.png; sourceTree = "<group>"; };
 		A7393D3C29A6723300C47229 /* ciccio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ciccio.png; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 				A7C223B229A4DA2500439545 /* Player.swift */,
 				833785C129A5854D00DE5263 /* Trigger.swift */,
 				83FA7C0B29A7A08F0064F8DC /* Enemy.swift */,
-				83FA7C0D29A7A0DF0064F8DC /* PickupItem.swift */,
+				83FA7C0F29A7A2B70064F8DC /* PickupItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -329,7 +329,7 @@
 				83A1574629A4002A009C0537 /* Platform.swift in Sources */,
 				833785C229A5854D00DE5263 /* Trigger.swift in Sources */,
 				A7C223B329A4DA2500439545 /* Player.swift in Sources */,
-				83FA7C0E29A7A0DF0064F8DC /* PickupItem.swift in Sources */,
+				83FA7C1029A7A2B70064F8DC /* PickupItem.swift in Sources */,
 				A7AE5C4B29A3C2F6002FDAEB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
